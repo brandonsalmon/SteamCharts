@@ -1,0 +1,17 @@
+{
+  "name": "SteamCharts",
+  "version": "0.1.0",
+  "authors": [
+    "Brandon Salmon <brandon.j.salmon@gmail.com>"
+  ],
+  "moduleType": [
+    "node"
+  ],
+  "license": "MIT",
+  "private": true,
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components"
+  ]
+}

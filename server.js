@@ -5,7 +5,8 @@ var server = http.Server(app);
 
 app.use(express.static(__dirname + '/public'));
 
-
+var steamId = '';
+var steamApiKey = '';
 
 var games;
 

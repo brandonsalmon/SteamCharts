@@ -16,6 +16,9 @@ app.controller('ChartController', ['$scope', '$http', function ($scope, $http) {
         $http.get('/data').success(function (data, status, headers, config) {
             $scope.data = data;
 
+            var gameTotal = 0;
+            var gameCount = 0;
+
             for (var i in data.games) {
                 var game = data.games[i];
 
@@ -36,6 +39,9 @@ app.controller('ChartController', ['$scope', '$http', function ($scope, $http) {
                     if (game.total > 0) {
                         game.percent = game.achieved / game.total * 100;
 
+                        gameTotal += game.percent;
+                        gameCount++;
+
                         chartPercents[Math.ceil(game.percent / 5)].y++;
 
                         if (game.percent > 0) {
@@ -44,6 +50,8 @@ app.controller('ChartController', ['$scope', '$http', function ($scope, $http) {
                     }
                 }
             }
+
+            $scope.overallPercent = gameTotal / gameCount;
 
             chartGames = _.sortBy(chartGames, function (game) { return game.y; });
             chartGamesCategories = _.pluck(chartGames, 'name');

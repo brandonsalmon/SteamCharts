@@ -10,6 +10,7 @@
 <body>
     <div ng-controller="ChartController" ng-init="initialize()">
         <div>Games: {{data.game_count}}</div>
+        <div>Overall Percent Completion: {{overallPercent|number:2}}%</div>
         <div id="chart"></div>
         <div id="chart2"></div>
     </div>

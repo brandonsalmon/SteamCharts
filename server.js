@@ -5,19 +5,18 @@ var server = http.Server(app);
 
 app.use(express.static(__dirname + '/public'));
 
-var steamId = 'xxxx';
-var steamApiKey = 'xxxx';
-
+var steamId = '';
+var steamApiKey = '';
 
 var games;
 
 app.get('/populate', function (req, res) {
     var options = {
         host: 'api.steampowered.com',
-        path: '/IPlayerService/GetOwnedGames/v0001/?key=xxxx&steamid=xxxx&format=json'
-        //path: '/ISteamUser/GetPlayerSummaries/v0002/?key=xxxx&steamids=xxxx'
-        //path: '/ISteamUserStats/GetPlayerAchievements/v0001/?appid=35140&key=xxxx&steamid=xxxx&format=json'
-        //path: '/ISteamUserStats/GetUserStatsForGame/v0002/?appid=35140&key=xxxx&steamid=xxxx'
+        path: '/IPlayerService/GetOwnedGames/v0001/?key=' + steamApiKey + '&steamid=' + steamId + '&format=json'
+        //path: '/ISteamUser/GetPlayerSummaries/v0002/?key=' + steamApiKey + '&steamids=' + steamId
+        //path: '/ISteamUserStats/GetPlayerAchievements/v0001/?appid=35140&key=' + steamApiKey + '&steamid=' + steamId + '&format=json'
+        //path: '/ISteamUserStats/GetUserStatsForGame/v0002/?appid=35140&key=' + steamApiKey + '&steamid=' + steamId
     };
 
     callback = function (response) {
@@ -44,10 +43,10 @@ function loadGame(i) {
     if (i < games.games.length) {
         var options2 = {
             host: 'api.steampowered.com',
-            //path: '/IPlayerService/GetOwnedGames/v0001/?key=xxxx&steamid=xxxx&format=json'
-            //path: '/ISteamUser/GetPlayerSummaries/v0002/?key=xxxx&steamids=xxx'
-            path: '/ISteamUserStats/GetPlayerAchievements/v0001/?appid=' + games.games[i].appid + '&key=xxxx&steamid=xxxx&format=json'
-            //path: '/ISteamUserStats/GetUserStatsForGame/v0002/?appid=35140&key=xxxx&steamid=xxxx'
+            //path: '/IPlayerService/GetOwnedGames/v0001/?key=' + steamApiKey + '&steamid=' + steamId + '&format=json'
+            //path: '/ISteamUser/GetPlayerSummaries/v0002/?key=' + steamApiKey + '&steamids=' + steamId
+            path: '/ISteamUserStats/GetPlayerAchievements/v0001/?appid=' + games.games[i].appid + '&key=' + steamApiKey + '&steamid=' + steamId + '&format=json'
+            //path: '/ISteamUserStats/GetUserStatsForGame/v0002/?appid=35140&key=' + steamApiKey + '&steamid=' + steamId
         };
 
         callback2 = function (responses) {

@@ -68,7 +68,7 @@ app.controller('ChartController', ['$scope', '$http', function ($scope, $http) {
         self.chart = $('#chart').highcharts({
             chart: {
                 type: 'area',
-                inverted: true
+                inverted: false
             },
             series: [{ name: 'Number of games' }],
             xAxis: {

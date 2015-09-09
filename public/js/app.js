@@ -9,6 +9,7 @@ app.controller('ChartController', ['$scope', '$http', function ($scope, $http) {
         self.initializeChart();
         var chartPercents = [];
         var chartGames = [];
+        var gameValues = [];
         for (var a = 0; a <= 20; a++) {
             chartPercents.push({ x: a * 5, y: 0 });
         }
@@ -45,7 +46,11 @@ app.controller('ChartController', ['$scope', '$http', function ($scope, $http) {
                         chartPercents[Math.ceil(game.percent / 5)].y++;
 
                         if (game.percent > 0) {
-                            chartGames.push({ name: game.details.playerstats.gameName, y: game.percent })
+                            chartGames.push({ name: game.details.playerstats.gameName, y: game.percent });
+
+                            if (game.percent < 100) {
+                                gameValues.push({ id: game.details.playerstats.gameName, x: game.total - game.achieved, y: 100 / game.total });
+                            }
                         }
                     }
                 }
@@ -54,11 +59,12 @@ app.controller('ChartController', ['$scope', '$http', function ($scope, $http) {
             $scope.overallPercent = gameTotal / gameCount;
 
             chartGames = _.sortBy(chartGames, function (game) { return game.y; });
-            chartGamesCategories = _.pluck(chartGames, 'name');
+            var chartGamesCategories = _.pluck(chartGames, 'name');
 
             self.chart.series[0].setData(chartPercents);
             self.chart2.xAxis[0].setCategories(chartGamesCategories);
             self.chart2.series[0].setData(chartGames);
+            self.chart3.series[0].setData(gameValues);
         }).error(function (data, status, headers, config) {
             $scope.data = '';
         });
@@ -94,6 +100,26 @@ app.controller('ChartController', ['$scope', '$http', function ($scope, $http) {
                 min: 0,
                 max: 100,
                 labels: { format: '{value:,.0f}%' }
+            }
+        }).highcharts();
+        self.chart3 = $('#chart3').highcharts({
+            chart: { type: 'scatter', zoomType: 'x' },
+            title: { text: 'Value per Achievement' },
+            series: [{ name: 'Games' }],
+            tooltip: {
+                valueDecimals: 2,
+                valueSuffix: '%'
+            },
+            xAxis: {
+                title: { text: 'Remaining' },
+                labels: {
+                    enabled: false
+                }
+            },
+            yAxis: {
+                title: { text: '% per achievement' },
+                labels: { format: '{value:,.2f}%' },
+                min: 0
             }
         }).highcharts();
     };

@@ -3,6 +3,8 @@ var concat = require('gulp-concat');
 var copy = require('gulp-copy');
 var uglify = require('gulp-uglify');
 
+gulp.task('default', ['compile:js']);
+
 gulp.task('compile:js', function () {
 	return gulp.src([
 		'bower_components/jquery/dist/jquery.js',

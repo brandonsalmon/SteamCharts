@@ -2,7 +2,7 @@
 Chart achievement stats using Steam API
 
 
-## Instal Prerequisites
+## Install Prerequisites
 * npm install
 * bower install
 

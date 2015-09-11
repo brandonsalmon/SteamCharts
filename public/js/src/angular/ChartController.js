@@ -1,5 +1,3 @@
-var app = angular.module('steamCharts', []);
-
 app.controller('ChartController', ['$scope', '$http', function ($scope, $http) {
     var self = this;
 
@@ -73,9 +71,11 @@ app.controller('ChartController', ['$scope', '$http', function ($scope, $http) {
     self.initializeChart = function () {
         self.chart = $('#chart').highcharts({
             chart: {
-                type: 'area',
-                inverted: false
+                type: 'areaspline',
+                inverted: false,
+                backgroundColor: null
             },
+            title: { text: 'Games by Completion' },
             series: [{ name: 'Number of games' }],
             xAxis: {
                 min: 0,
@@ -84,8 +84,9 @@ app.controller('ChartController', ['$scope', '$http', function ($scope, $http) {
             }
         }).highcharts();
         self.chart2 = $('#chart2').highcharts({
-            chart: { type: 'column' },
+            chart: { type: 'column'},
             series: [{ name: 'Percent of Achievements Earned' }],
+            title: { text: 'Overall Completion' },
             tooltip: {
                 valueDecimals: 0,
                 valueSuffix: '%'
@@ -103,7 +104,8 @@ app.controller('ChartController', ['$scope', '$http', function ($scope, $http) {
             }
         }).highcharts();
         self.chart3 = $('#chart3').highcharts({
-            chart: { type: 'scatter', zoomType: 'x' },
+            chart: { type: 'scatter', zoomType: 'x',
+                backgroundColor: null },
             title: { text: 'Value per Achievement' },
             series: [{ name: 'Games' }],
             tooltip: {

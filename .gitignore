@@ -55,3 +55,7 @@ $RECYCLE.BIN/
 
 # Windows shortcuts
 *.lnk
+
+settings.json
+app.min.js
+.vscode/

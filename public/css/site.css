@@ -1,0 +1,15 @@
+body{margin:0;
+    background: #1b2838;
+    background-color: #1b2838;
+    color: #8F98A0;}
+header{ 
+	   background: #171a21;
+    padding: 40px;
+    line-height: 16px;
+    font-size: 14px;
+    color: #b8b6b4;
+    text-transform: uppercase;
+	}
+    
+    h1{margin:0;padding:0;}
+    .half-width{width:50%;float:left;}

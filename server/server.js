@@ -1,82 +1,40 @@
-function start(settings) {
-    var express = require('express');
-    var app = express();
-    var http = require('http');
-    var server = http.Server(app);
+function server(http, express, steamService, gamesRepository) {
+    var self = this;
 
-    app.use(express.static(__dirname + '/../public'));
+    self.http = http;
+    self.express = express;
+    self.steamService = steamService;
+    self.gamesRepository = gamesRepository;
 
-    var steamId = '76561197976683429';
+    self.app;
+    self.server;
 
-    var games;
+    self.start = function () {
+        self.app = self.express();
+        self.server = self.http.Server(self.app);
 
-    app.get('/populate', function (req, res) {
-        var options = {
-            host: 'api.steampowered.com',
-            path: '/IPlayerService/GetOwnedGames/v0001/?key=' + settings.steamApiKey + '&steamid=' + steamId + '&format=json'
-            //path: '/ISteamUser/GetPlayerSummaries/v0002/?key=' + settings.steamApiKey + '&steamids=' + steamId
-            //path: '/ISteamUserStats/GetPlayerAchievements/v0001/?appid=35140&key=' + settings.steamApiKey + '&steamid=' + steamId + '&format=json'
-            //path: '/ISteamUserStats/GetUserStatsForGame/v0002/?appid=35140&key=' + settings.steamApiKey + '&steamid=' + steamId
-        };
+        self.app.use(self.express.static(__dirname + '/../public'));
 
-        callback = function (response) {
-            var str = '';
+        self.app.param('steamId', function (req, res, next, steamId) {
+            req.steamId = steamId;
+            next();
+        });
 
-            response.on('data', function (chunk) {
-                str += chunk;
-            });
+        self.app.get('/populate/:steamId', function (req, res) {
+            console.log('populating ' + req.steamId);
+            self.steamService.populate(req.steamId);
+            res.send('populating');
+        });
 
-            response.on('end', function () {
+        self.app.get('/data', function (req, res) {
+            var games = self.gamesRepository.getGames();
+            res.send(games);
+        })
 
-                games = JSON.parse(str).response;
-
-                loadGame(0);
-
-                res.send('populating');
-            });
-        }
-
-        http.request(options, callback).end();
-    })
-
-    function loadGame(i) {
-        if (i < games.games.length) {
-            var options2 = {
-                host: 'api.steampowered.com',
-                //path: '/IPlayerService/GetOwnedGames/v0001/?key=' + settings.steamApiKey + '&steamid=' + steamId + '&format=json'
-                //path: '/ISteamUser/GetPlayerSummaries/v0002/?key=' + settings.steamApiKey + '&steamids=' + steamId
-                path: '/ISteamUserStats/GetPlayerAchievements/v0001/?appid=' + games.games[i].appid + '&key=' + settings.steamApiKey + '&steamid=' + steamId + '&format=json'
-                //path: '/ISteamUserStats/GetUserStatsForGame/v0002/?appid=35140&key=' + settings.steamApiKey + '&steamid=' + steamId
-            };
-
-            callback2 = function (responses) {
-                var str = '';
-
-                responses.on('data', function (chunk) {
-                    str += chunk;
-                });
-
-                responses.on('end', function () {
-
-                    var gamesDetails = JSON.parse(str);
-
-                    games.games[i].details = gamesDetails;
-
-                    loadGame(i + 1);
-                });
-            }
-
-            http.request(options2, callback2).end();
-        }
+        self.server.listen(3000, function () {
+            console.log('listening on *:3000');
+        });
     }
-
-    app.get('/data', function (req, res) {
-        res.send(games);
-    })
-
-    server.listen(3000, function () {
-        console.log('listening on *:3000');
-    });
 }
 
-exports.start = start;
+module.exports = server;

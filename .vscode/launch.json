@@ -1,0 +1,11 @@
+{
+    "version": "0.1.0",
+    "configurations": [
+        {
+            "name": "Launch Server",
+            "type": "node",
+            "program": "app.js",
+            "stopOnEntry": true
+        }
+    ]
+}

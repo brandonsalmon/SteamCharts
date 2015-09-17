@@ -2,14 +2,17 @@
 
 <head>
     <title>Steam Charts</title>
-    <link href="/css/site.css" rel="stylesheet" type="text/css"></link>
-    <script src="/js/app.min.js"></script>
+    <link href="/css/" rel="stylesheet" type="text/css"></link>
+    <!--<script src="/js/app.min.js"></script>-->
+    <script src="/js/"></script>
 </head>
 
 <body>
     <div ng-controller="ChartController" ng-init="initialize()">
         <header>
             <h1 style="float:left;">Steam Achievement Tracker</h1>
+            <input class="form-control" ng-model="steamId" />
+            <button class="btn btn-default" ng-click="linkAccount()">Link Steam Id</button>
             <div style="float:right">
                 <div>Games: {{data.game_count}}</div>
                 <div>Overall Percent Completion: {{overallPercent|number:2}}%</div>

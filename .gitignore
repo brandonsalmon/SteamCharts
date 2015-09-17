@@ -56,6 +56,7 @@ $RECYCLE.BIN/
 # Windows shortcuts
 *.lnk
 
-settings.json
-app.min.js
-.vscode/
+scripts.min.js
+scripts.js
+
+steamApiKey.json

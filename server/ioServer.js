@@ -18,9 +18,18 @@ function ioServer(socketIo, steamService, gamesRepository) {
     self.linkAccount = function (socket, steamId) {
         console.log('linkAccount: ' + socket.conn.id + ', ' + steamId);
         self.users[socket.conn.id].steamId = steamId;
-        self.steamService.populate(steamId, function (game) {
-            self.gameUpdate(socket, game);
-        });
+
+        if (self.gamesRepository.isPopulated(steamId)) {
+            var totalGames = self.gamesRepository.getGamesCount();
+            for (var i = 0; i < totalGames; i++) {
+                var game = self.gamesRepository.getGame(i);
+                self.gameUpdate(socket, game);
+            }
+        } else {
+            self.steamService.populate(steamId, function (game) {
+                self.gameUpdate(socket, game);
+            });
+        }
     };
 
     self.gameUpdate = function (socket, game) {

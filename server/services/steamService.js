@@ -27,6 +27,8 @@ function steamService(steamApiService, gamesRepository) {
             var game = self.gamesRepository.getGame(index);
             self.steamApiService.GetPlayerAchievements(game.appid, steamId, callback);
         }
+
+        self.gamesRepository.setPopulated(steamId, true);
     }
 }
 

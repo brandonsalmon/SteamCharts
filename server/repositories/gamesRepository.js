@@ -1,7 +1,8 @@
 function gamesRepository() {
     var self = this;
 
-    self.games = [];
+    self.games = { games: [] };
+    self.populated = false;
 
     self.getGames = function () {
         return self.games;
@@ -21,6 +22,14 @@ function gamesRepository() {
 
     self.storeGameDetails = function storeGameDetails(index, details) {
         self.games.games[index].details = details;
+    }
+
+    self.setPopulated = function (steamId, isPopulated) {
+        self.populated = isPopulated;
+    }
+
+    self.isPopulated = function (steamId) {
+        return self.populated;
     }
 }
 

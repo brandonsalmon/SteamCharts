@@ -101,6 +101,11 @@ app.controller('ChartController', ['$scope', '$http', 'socket', function ($scope
         }).highcharts();
         self.chart2 = $('#chart2').highcharts({
             chart: { type: 'column'},
+            plotOptions: { column: {
+                pointPadding: 0,
+                groupPadding: 0,
+                borderWidth: 0,
+                shadow: false}},
             series: [{ name: 'Percent of Achievements Earned' }],
             title: { text: 'Overall Completion' },
             tooltip: {

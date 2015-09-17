@@ -53,7 +53,7 @@ function server(http, express, path, io) {
             res.sendFile(filePath);
         });
         self.app.get('/css/', function (req, res) {
-            var filePath = self.publicDirectory + '/css/site.css';
+            var filePath = self.publicDirectory + '/styles.css';
             res.sendFile(filePath);
         });
 

@@ -10,20 +10,28 @@
 <body>
     <div ng-controller="ChartController" ng-init="initialize()">
         <header>
-            <h1 style="float:left;">Steam Achievement Tracker</h1>
-            <input class="form-control" ng-model="steamId" />
-            <button class="btn btn-default" ng-click="linkAccount()">Link Steam Id</button>
-            <div style="float:right">
-                <div>Games: {{data.game_count}}</div>
-                <div>Overall Percent Completion: {{overallPercent|number:2}}%</div>
+            <div class="container">
+                <h1 style="float:left;">Steam Achievement Tracker</h1>
+                <input class="form-control" ng-model="steamId" />
+                <button class="btn btn-default" ng-click="linkAccount()">Link Steam Id</button>
+                <div style="float:right">
+                    <div>Games: {{data.game_count}}</div>
+                    <div>Overall Percent Completion: {{overallPercent|number:2}}%</div>
+                </div>
+                <span style="clear: both; display: block;"></span>
             </div>
-            <span style="clear: both; display: block;"></span>
         </header>
-        <div id="chart2"></div>
-        <div id="chart" class="half-width"></div>
-        <div id="chart3" class="half-width"></div>
+        <div class="container">
+            <div id="chart2"></div>
+            <div id="chart" class="half-width"></div>
+            <div id="chart3" class="half-width"></div>
+        </div>
     </div>
-    <a href="http://steampowered.com">Powered by Steam</a>
+    <footer>
+        <div class="container">
+            <a href="http://steampowered.com" class="pull-right">Powered by Steam</a>
+        </div>
+    </footer>
 </body>
 
 </html>

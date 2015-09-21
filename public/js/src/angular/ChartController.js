@@ -27,6 +27,11 @@ app.controller('ChartController', ['$scope', '$http', 'socket', function ($scope
         $scope.recalculateCharts();
     });
 
+    socket.on('allGamesUpdate', function (games) {
+        $scope.data = games;
+        $scope.recalculateCharts();
+    });
+
     $scope.recalculateCharts = function () {
         var chartGames = [];
         var chartPercents = [];
@@ -97,7 +102,7 @@ app.controller('ChartController', ['$scope', '$http', 'socket', function ($scope
         var renderPie = [];
         var other = 0;
         _.each(pieTimes, function (game) {
-            if (totalTime / playtime < .9 && game.y/playtime > .01) {
+            if (game.y/playtime > .02) {
                 renderPie.push(game);
             } else {
                 other += game.y;
@@ -144,6 +149,11 @@ app.controller('ChartController', ['$scope', '$http', 'socket', function ($scope
         }).highcharts();
         self.chart2 = $('#chart2').highcharts({
             chart: { type: 'column'},
+            plotOptions: { column: {
+                pointPadding: 0,
+                groupPadding: 0.1,
+                borderWidth: 0,
+                shadow: false}},
             series: [{ name: 'Percent of Achievements Earned' }],
             title: { text: 'Overall Completion' },
             tooltip: {

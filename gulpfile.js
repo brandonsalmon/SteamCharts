@@ -7,8 +7,16 @@ var sass = require('gulp-sass');
 gulp.task('default', ['watch']);
 
 gulp.task('watch', function () {
-    var jsWatcher = gulp.watch(['bower_components/**/*.js', 'public/js/**/*.js'], ['compile:js']);
-    var sassWatcher = gulp.watch(['**/*.sass'], ['compile:sass']);
+    var jsWatcher = gulp.watch([
+        'bower_components/**/*.js',
+        'public/js/**/*.js'
+    ], ['compile:js']);
+
+    var sassWatcher = gulp.watch([
+        'bower_components/**/*.css',
+        'public/css/**/*.css',
+        '**/*.sass'
+    ], ['compile:sass']);
 
     jsWatcher.on('change', function (event) {
         console.log(event.path + ' was ' + event.type + ', compiling js...');
@@ -20,7 +28,15 @@ gulp.task('watch', function () {
 });
 
 gulp.task('compile:sass', function () {
-
+    return gulp.src([
+        'bower_components/bootstrap/dist/css/bootstrap.css',
+        'public/css/site.css'
+    ])
+        .pipe(concat('styles.css'))
+        .pipe(gulp.dest('public'))
+        .pipe(sass())
+        .pipe(concat('styles.min.css'))
+        .pipe(gulp.dest('public'));
 });
 
 gulp.task('compile:js', function () {

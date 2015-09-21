@@ -31,3 +31,17 @@ h1 {
     border-radius: 5px;
     display: inline-block;
         }
+
+        footer {
+    clear: both;
+    font-size: 12px;
+    color: #8F98A0;
+    border: 0;
+    margin: 0;
+    padding: 32px 40px;
+    background-color: rgba( 0, 0, 0, 0.4 );
+}
+
+footer a{color: #C6D4DF;
+    text-decoration: none;    font-family: Arial, Helvetica, Verdana, sans-serif;}
+

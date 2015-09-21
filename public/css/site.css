@@ -23,6 +23,15 @@ h1 {
         float:left;
         }
 
+        .perfect-game{
+    border: 1px solid #b8b6b4;
+    padding: 10px;
+    margin: 5px;
+    background-color: rgba(0,0,0,.1);
+    border-radius: 5px;
+    display: inline-block;
+        }
+
         footer {
     clear: both;
     font-size: 12px;
@@ -35,3 +44,4 @@ h1 {
 
 footer a{color: #C6D4DF;
     text-decoration: none;    font-family: Arial, Helvetica, Verdana, sans-serif;}
+

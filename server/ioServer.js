@@ -20,11 +20,8 @@ function ioServer(socketIo, steamService, gamesRepository) {
         self.users[socket.conn.id].steamId = steamId;
 
         if (self.gamesRepository.isPopulated(steamId)) {
-            var totalGames = self.gamesRepository.getGamesCount();
-            for (var i = 0; i < totalGames; i++) {
-                var game = self.gamesRepository.getGame(i);
-                self.gameUpdate(socket, game);
-            }
+            var games = self.gamesRepository.getGames(steamId);
+            self.allGamesUpdate(socket, games);
         } else {
             self.steamService.populate(steamId, function (game) {
                 self.gameUpdate(socket, game);
@@ -35,6 +32,11 @@ function ioServer(socketIo, steamService, gamesRepository) {
     self.gameUpdate = function (socket, game) {
         console.log('gameUpdate: ' + socket.conn.id + ', ' + game);
         socket.emit('gameUpdate', game);
+    };
+
+    self.allGamesUpdate = function (socket, games) {
+        console.log('allGamesUpdate: ' + socket.conn.id + ', ' + games.length + ' games');
+        socket.emit('allGamesUpdate', games);
     };
 
     self.disconnect = function (socket) {

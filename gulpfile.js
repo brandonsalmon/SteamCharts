@@ -44,6 +44,8 @@ gulp.task('compile:js', function () {
         'bower_components/jquery/dist/jquery.js',
         'bower_components/angular/angular.js',
         'bower_components/highcharts/highcharts.js',
+        'bower_components/moment/moment.js',
+        'bower_components/humanize-duration/humanize-duration.js',
         'bower_components/underscore/underscore.js',
         'bower_components/socket.io-client/socket.io.js',
         'public/js/src/angular/app/app.js',

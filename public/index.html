@@ -2,9 +2,8 @@
 
 <head>
     <title>Steam Charts</title>
-    <link href="/css/" rel="stylesheet" type="text/css"></link>
-    <!--<script src="/js/app.min.js"></script>-->
-    <script src="/js/"></script>
+    <link href="/site.css" rel="stylesheet" type="text/css"></link>
+    <script src="/scripts.js"></script>
 </head>
 
 <body>
@@ -14,14 +13,20 @@
             <input class="form-control" ng-model="steamId" />
             <button class="btn btn-default" ng-click="linkAccount()">Link Steam Id</button>
             <div style="float:right">
-                <div>Games: {{data.game_count}}</div>
+                <div>Games: {{data.length}}</div>
                 <div>Overall Percent Completion: {{overallPercent|number:2}}%</div>
+                <div>Total Play Time: {{filterMoment()}}</div>
             </div>
             <span style="clear: both; display: block;"></span>
         </header>
         <div id="chart2"></div>
+        <div ng-show="perfectGames.length>0">
+            <h3>{{perfectGames.length}} Perfect Games</h3>
+            <span class="perfect-game" ng-repeat="game in perfectGames | orderBy:'name'">{{game.name}}</span>
+        </div>
         <div id="chart" class="half-width"></div>
         <div id="chart3" class="half-width"></div>
+        <div id="chart4" class="half-width"></div>
     </div>
     <a href="http://steampowered.com">Powered by Steam</a>
 </body>

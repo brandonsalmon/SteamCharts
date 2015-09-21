@@ -48,11 +48,11 @@ function server(http, express, path, io) {
             var filePath = self.publicDirectory + '/index.html';
             res.sendFile(filePath);
         });
-        self.app.get('/js/', function (req, res) {
+        self.app.get('/scripts.js', function (req, res) {
             var filePath = self.publicDirectory + '/scripts.js';
             res.sendFile(filePath);
         });
-        self.app.get('/css/', function (req, res) {
+        self.app.get('/site.css', function (req, res) {
             var filePath = self.publicDirectory + '/css/site.css';
             res.sendFile(filePath);
         });

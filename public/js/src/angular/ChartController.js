@@ -1,3 +1,4 @@
+/* global humanizeDuration */
 /* global app */
 /* global $ */
 /* global _ */
@@ -6,10 +7,19 @@ app.controller('ChartController', ['$scope', '$http', 'socket', function ($scope
     var self = this;
 
     $scope.data = [];
+    $scope.perfectGames = [];
+    $scope.playtime = 0;
     $scope.steamId;
 
     $scope.linkAccount = function () {
+        $scope.data = [];
+        $scope.perfectGames = [];
+        $scope.playtime = 0;
         socket.emit('link account', $scope.steamId);
+    };
+
+    $scope.filterMoment = function () {
+        return humanizeDuration($scope.playtime * 60 * 1000);
     };
 
     socket.on('gameUpdate', function (game) {
@@ -18,8 +28,10 @@ app.controller('ChartController', ['$scope', '$http', 'socket', function ($scope
     });
 
     $scope.recalculateCharts = function () {
-        var chartPercents = [];
         var chartGames = [];
+        var chartPercents = [];
+        var perfectGames = [];
+        var pieTimes = [];
         var gameValues = [];
         for (var a = 0; a <= 20; a++) {
             chartPercents.push({ x: a * 5, y: 0 });
@@ -27,6 +39,7 @@ app.controller('ChartController', ['$scope', '$http', 'socket', function ($scope
 
         var gameTotal = 0;
         var gameCount = 0;
+        var playtime = 0;
 
         for (var i in $scope.data) {
             var game = $scope.data[i];
@@ -34,8 +47,10 @@ app.controller('ChartController', ['$scope', '$http', 'socket', function ($scope
             game.achieved = 0;
             game.total = 0;
             game.percent = 0;
+            game.name = '';
 
             if (game.details && game.details.playerstats.success) {
+                game.name = game.details.playerstats.gameName;
                 for (var j in game.details.playerstats.achievements) {
                     var achievement = game.details.playerstats.achievements[j];
 
@@ -47,6 +62,10 @@ app.controller('ChartController', ['$scope', '$http', 'socket', function ($scope
                 }
                 if (game.total > 0) {
                     game.percent = game.achieved / game.total * 100;
+
+                    if (game.percent == 100) {
+                        perfectGames.push(game);
+                    }
 
                     gameTotal += game.percent;
                     gameCount++;
@@ -62,9 +81,32 @@ app.controller('ChartController', ['$scope', '$http', 'socket', function ($scope
                     }
                 }
             }
+
+            if (game.playtime_forever) {
+                playtime += game.playtime_forever;
+                pieTimes.push({name:game.name,y:game.playtime_forever});
+            }
         }
 
+        $scope.perfectGames = perfectGames;
+        $scope.playtime = playtime;
         $scope.overallPercent = gameTotal / gameCount;
+
+        pieTimes = _.sortBy(pieTimes, function (game) { return game.y *-1; });
+        var totalTime = 0;
+        var renderPie = [];
+        var other = 0;
+        _.each(pieTimes, function (game) {
+            if (totalTime / playtime < .9 && game.y/playtime > .01) {
+                renderPie.push(game);
+            } else {
+                other += game.y;
+             }
+            totalTime += game.y;
+        });
+        if (other > 0) {
+            renderPie.push({name:'Other', y: other})
+         }
 
         chartGames = _.sortBy(chartGames, function (game) { return game.y; });
         var chartGamesCategories = _.pluck(chartGames, 'name');
@@ -73,6 +115,7 @@ app.controller('ChartController', ['$scope', '$http', 'socket', function ($scope
         self.chart2.xAxis[0].setCategories(chartGamesCategories);
         self.chart2.series[0].setData(chartGames);
         self.chart3.series[0].setData(gameValues);
+        self.chart4.series[0].setData(renderPie);
     };
 
     $scope.getData = function () {
@@ -139,6 +182,15 @@ app.controller('ChartController', ['$scope', '$http', 'socket', function ($scope
                 labels: { format: '{value:,.2f}%' },
                 min: 0
             }
+        }).highcharts();
+        self.chart4 = $('#chart4').highcharts({
+            chart: { type: 'pie',
+                backgroundColor: null },
+            title: { text: 'Playtime' },
+            tooltip: {
+                pointFormatter: function () {return humanizeDuration(this.y * 60 * 1000); }
+            },
+            series: [{ name: 'Games' }]
         }).highcharts();
     };
 }]);

@@ -6,7 +6,7 @@ function steamService(steamApiService, gamesRepository) {
 
     self.populate = function (steamId, gamePopulatedCallback) {
         var callback = function (result) {
-            self.gamesRepository.storeGames(result.response);
+            self.gamesRepository.storeGames(steamId, result.response);
             self.loadGamesRecursive(0, steamId, gamePopulatedCallback);
         }
 
@@ -14,17 +14,17 @@ function steamService(steamApiService, gamesRepository) {
     }
 
     self.loadGamesRecursive = function (index, steamId, gamePopulatedCallback) {
-        var gamesCount = self.gamesRepository.getGamesCount();
+        var gamesCount = self.gamesRepository.getGamesCount(steamId);
 
         if (index < gamesCount) {
             var callback = function (result) {
-                self.gamesRepository.storeGameDetails(index, result);
-                var game = self.gamesRepository.getGame(index);
+                self.gamesRepository.storeGameDetails(steamId, index, result);
+                var game = self.gamesRepository.getGame(steamId, index);
                 gamePopulatedCallback(game);
                 self.loadGamesRecursive(index + 1, steamId, gamePopulatedCallback);
             }
 
-            var game = self.gamesRepository.getGame(index);
+            var game = self.gamesRepository.getGame(steamId, index);
             self.steamApiService.GetPlayerAchievements(game.appid, steamId, callback);
         }
     }

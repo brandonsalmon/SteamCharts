@@ -1,26 +1,28 @@
 function gamesRepository() {
     var self = this;
 
-    self.games = [];
+    self.games = {};
 
-    self.getGames = function () {
-        return self.games;
+    self.getGames = function (steamId) {
+        return self.games[steamId] || [];
     }
 
-    self.getGamesCount = function () {
-        return self.games.games.length;
+    self.getGamesCount = function (steamId) {
+        return (self.games[steamId] || []).length;
     }
 
-    self.getGame = function (index) {
-        return self.games.games[index];
+    self.getGame = function (steamId, index) {
+        return (self.games[steamId] || [])[index];
     }
 
-    self.storeGames = function (result) {
-        self.games = result;
+    self.storeGames = function (steamId, result) {
+        self.games[steamId] = result.games;
     }
 
-    self.storeGameDetails = function storeGameDetails(index, details) {
-        self.games.games[index].details = details;
+    self.storeGameDetails = function storeGameDetails(steamId, index, details) {
+        if (self.games[steamId] && self.games[steamId][index]) {
+            self.games[steamId][index].details = details;
+        }
     }
 }
 

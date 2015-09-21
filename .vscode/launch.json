@@ -5,7 +5,7 @@
             "name": "Launch Server",
             "type": "node",
             "program": "app.js",
-            "stopOnEntry": true
+            "stopOnEntry": false
         }
     ]
 }

@@ -22,3 +22,12 @@ h1 {
         width:50%;
         float:left;
         }
+
+        .perfect-game{
+    border: 1px solid #b8b6b4;
+    padding: 10px;
+    margin: 5px;
+    background-color: rgba(0,0,0,.1);
+    border-radius: 5px;
+    display: inline-block;
+        }

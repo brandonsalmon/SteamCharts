@@ -26,6 +26,7 @@
   "private": true,
   "devDependencies": {
     "gulp": "^3.9.0",
+    "gulp-bower": "0.0.10",
     "gulp-concat": "^2.6.0",
     "gulp-copy": "0.0.2",
     "gulp-sass": "^2.0.4",

@@ -3,8 +3,9 @@ var concat = require('gulp-concat');
 var copy = require('gulp-copy');
 var uglify = require('gulp-uglify');
 var sass = require('gulp-sass');
+var bower = require('gulp-bower');
 
-gulp.task('default', ['watch']);
+gulp.task('default', ['install', 'compile', 'watch']);
 
 gulp.task('watch', function () {
     var jsWatcher = gulp.watch([
@@ -26,6 +27,14 @@ gulp.task('watch', function () {
         console.log(event.path + ' was ' + event.type + ', compiling sass...');
     });
 });
+
+gulp.task('install', ['bower']);
+
+gulp.task('bower', function () {
+    return bower();
+});
+
+gulp.task('compile', ['compile:js', 'compile:sass']);
 
 gulp.task('compile:sass', function () {
     return gulp.src([

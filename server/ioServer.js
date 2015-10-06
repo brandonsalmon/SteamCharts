@@ -13,6 +13,7 @@ function ioServer(socketIo, steamService, gamesRepository) {
 
         socket.on('disconnect', function (message) { self.disconnect(socket, message) });
         socket.on('link account', function (message) { self.linkAccount(socket, message) });
+        socket.on('refresh account', function (message) { self.refreshAccount(socket, message) });
     };
 
     self.linkAccount = function (socket, steamId) {
@@ -27,6 +28,15 @@ function ioServer(socketIo, steamService, gamesRepository) {
                 self.gameUpdate(socket, game);
             });
         }
+    };
+
+    self.refreshAccount = function (socket, steamId) {
+        console.log('refreshAccount: ' + socket.conn.id + ', ' + steamId);
+        self.users[socket.conn.id].steamId = steamId;
+        self.gamesRepository.setPopulated(false);
+        self.steamService.populate(steamId, function (game) {
+            self.gameUpdate(socket, game);
+        });
     };
 
     self.gameUpdate = function (socket, game) {

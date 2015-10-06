@@ -10,13 +10,12 @@ gulp.task('default', ['install', 'compile', 'watch']);
 gulp.task('watch', function () {
     var jsWatcher = gulp.watch([
         'bower_components/**/*.js',
-        'public/js/**/*.js'
+        'client/js/**/*.js'
     ], ['compile:js']);
 
     var sassWatcher = gulp.watch([
         'bower_components/**/*.css',
-        'public/css/**/*.css',
-        '**/*.sass'
+        'client/css/**/*.sass'
     ], ['compile:sass']);
 
     jsWatcher.on('change', function (event) {
@@ -39,7 +38,7 @@ gulp.task('compile', ['compile:js', 'compile:sass']);
 gulp.task('compile:sass', function () {
     return gulp.src([
         'bower_components/bootstrap/dist/css/bootstrap.css',
-        'public/css/site.css'
+        'public/css/site.sass'
     ])
         .pipe(concat('styles.css'))
         .pipe(gulp.dest('public'))

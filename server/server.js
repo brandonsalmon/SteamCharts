@@ -33,7 +33,7 @@ function server(http, express, path, io, config) {
         self.app.use(express.static(self.compiledDirectory));
 
         self.app.get('*', function (req, res) {
-            var filePath = self.clientDirectory + 'templates/base-' + self.mode + '.html';
+            var filePath = self.clientDirectory + '/templates/base-' + self.mode + '.html';
             res.sendFile(filePath);
         });
     };

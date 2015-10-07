@@ -1,6 +1,6 @@
 /* global __dirname */
 
-function server(http, express, path, io) {
+function server(http, express, path, io, config) {
     var self = this;
 
     self.http = http;
@@ -8,7 +8,9 @@ function server(http, express, path, io) {
     self.io = io;
     self.express = express;
 
-    self.publicDirectory = self.path.resolve(__dirname + '/../public');
+    self.mode = config.mode || 'release';
+    self.clientDirectory = self.path.resolve(__dirname + '/../client');
+    self.compiledDirectory = self.path.resolve(__dirname + '/../compiled/' + self.mode);
 
     self.app;
     self.server;
@@ -27,16 +29,11 @@ function server(http, express, path, io) {
     }
 
     self.registerRoutes = function () {
-        self.app.get('/', function (req, res) {
-            var filePath = self.publicDirectory + '/index.html';
-            res.sendFile(filePath);
-        });
-        self.app.get('/scripts.js', function (req, res) {
-            var filePath = self.publicDirectory + '/scripts.js';
-            res.sendFile(filePath);
-        });
-        self.app.get('/styles.css', function (req, res) {
-            var filePath = self.publicDirectory + '/styles.css';
+        self.app.use(express.static(self.clientDirectory + '/public'));
+        self.app.use(express.static(self.compiledDirectory));
+
+        self.app.get('*', function (req, res) {
+            var filePath = self.clientDirectory + 'templates/base-' + self.mode + '.html';
             res.sendFile(filePath);
         });
     };

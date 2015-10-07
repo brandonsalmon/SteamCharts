@@ -1,4 +1,4 @@
-function steamApiService(apiKey, httpService) {
+function steamApiService(httpService, apiKey) {
     var self = this;
 
     self.apiKey = apiKey;

@@ -1,4 +1,4 @@
 {
-    "minify": false,
+    "mode": "dev",
     "steamApiKey": "62912EBB1B64E2AB6D9C944B25D1E6E0"
 }

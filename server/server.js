@@ -23,13 +23,14 @@ function server(http, express, path, io, config) {
 
         self.io.registerIo(self.server);
 
-        self.server.listen(3000, function () {
-            console.log('listening on *:3000');
+        self.server.listen(3001, function () {
+            console.log('listening on *:3001');
         });
     }
 
     self.registerRoutes = function () {
         self.app.use(express.static(self.clientDirectory + '/public'));
+        self.app.use(express.static(self.clientDirectory + '/templates'));
         self.app.use(express.static(self.compiledDirectory));
 
         self.app.get('*', function (req, res) {

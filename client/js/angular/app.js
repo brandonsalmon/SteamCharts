@@ -1,1 +1,1 @@
-var app = angular.module('steamCharts', []);
+var app = angular.module('gato.steam', ['ngRoute']);

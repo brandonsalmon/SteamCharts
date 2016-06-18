@@ -9,6 +9,7 @@ var bower = require('gulp-bower');
 var jsLib = [
     'bower_components/jquery/dist/jquery.js',
     'bower_components/angular/angular.js',
+    'bower_components/angular-route/angular-route.js',
     'bower_components/highcharts/highcharts.js',
     'bower_components/moment/moment.js',
     'bower_components/humanize-duration/humanize-duration.js',
@@ -20,7 +21,8 @@ var cssLib = [
 ];
 var jsApp = [
     'client/js/highcharts/themes/steam.js',
-    'client/js/angular/app.js'
+    'client/js/angular/app.js',
+    'client/js/angular/router.js'
 ];
 var jsControllers = [
     'client/js/angular/controllers/**/*.js'
@@ -60,7 +62,7 @@ gulp.task('compile:js:lib', function () {
         .pipe(gulp.dest('compiled/release/js'));
 });
 gulp.task('compile:js:app', function () {
-    return gulp.src(jsApp)
+    return gulp.src(jsApp.concat(jsControllers).concat(jsServices).concat(jsDirectives))
         .pipe(gulp.dest('compiled/dev/js'))
         .pipe(concat('app.js'))
         .pipe(gulp.dest('compiled/debug/js'))

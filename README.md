@@ -15,4 +15,4 @@ Chart achievement stats using Steam API
 
 ## Run Website
 * node app
-* http://localhost:3001
+* http://localhost:3000

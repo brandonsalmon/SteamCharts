@@ -1,6 +1,6 @@
 /* global __dirname */
 
-function server(http, express, path, io, config) {
+function server(http, express, path, io, config, port) {
     var self = this;
 
     self.http = http;
@@ -23,8 +23,8 @@ function server(http, express, path, io, config) {
 
         self.io.registerIo(self.server);
 
-        self.server.listen(3001, function () {
-            console.log('listening on *:3001');
+        self.server.listen(port, function () {
+            console.log('listening on *:' + port);
         });
     }
 

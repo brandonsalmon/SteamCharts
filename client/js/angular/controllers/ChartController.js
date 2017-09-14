@@ -122,8 +122,7 @@ app.controller('ChartController', ['$scope', '$http', 'socket', function ($scope
 
         for (var pieIndex in pieTimes) {
             var pieGame = pieTimes[pieIndex];
-
-            if (pieIndex < 50) {//pieGame.y / playtime > 0.01) {
+            if (pieIndex < 10) {//pieGame.y / playtime > 0.01) {
                 renderPie.push(pieGame);
             }
             else {
@@ -169,7 +168,7 @@ app.controller('ChartController', ['$scope', '$http', 'socket', function ($scope
         self.chart2.series[2].setData(series3);
         self.chart2.series[3].setData(series4);
         self.chart2.xAxis[0].setCategories(categories);
-        self.chart2.xAxis[0].update({ labels: { enabled: chartGames.length < 100 } });
+        self.chart2.xAxis[0].update({ labels: { enabled: categories.length < 50 } });
 
         self.chart3.series[0].setData(gameValues);
         self.chart4.series[0].setData(renderPie);

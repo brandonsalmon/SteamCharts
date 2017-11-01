@@ -12,14 +12,23 @@ function httpService(http) {
         });
 
         response.on('end', function () {
-            result = JSON.parse(str);
-            callback(result);
+            try {
+                result = JSON.parse(str);
+                callback(result);
+            }
+            catch (exception) {
+                console.error(exception);
+            }
         });
     }
 
     self.getJson = function (options, callback) {
         var callbackResult = function (response) {
-            self.readJsonResponse(response, callback);
+            try {
+                self.readJsonResponse(response, callback);
+            } catch (exception) {
+                console.error(exception);
+            }
         }
 
         self.http.request(options, callbackResult).end();

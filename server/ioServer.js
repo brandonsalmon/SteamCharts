@@ -25,7 +25,12 @@ function ioServer(socketIo, steamService, gamesRepository) {
             self.allGamesUpdate(socket, games);
         } else {
             self.steamService.populate(steamId, function (game) {
-                self.gameUpdate(socket, game);
+                if (self.users[socket.conn.id]) {
+                    self.gameUpdate(socket, game);
+                    return true
+                }
+
+                return false;
             });
         }
     };
@@ -35,7 +40,12 @@ function ioServer(socketIo, steamService, gamesRepository) {
         self.users[socket.conn.id].steamId = steamId;
         self.gamesRepository.setPopulated(false);
         self.steamService.populate(steamId, function (game) {
-            self.gameUpdate(socket, game);
+            if (self.users[socket.conn.id]) {
+                self.gameUpdate(socket, game);
+                return true
+            }
+
+            return false;
         });
     };
 

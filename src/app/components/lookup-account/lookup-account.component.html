@@ -1,0 +1,12 @@
+<form class="form-inline" [formGroup]="userForm">
+  <div class="form-group mx-sm-3 mb-2">
+    <label for="steamId" class="sr-only">Steam ID</label>
+    <input type="text" class="form-control" id="steamId" placeholder="Steam ID" formControlName="steamId" />
+  </div>
+  <div class="form-group mx-sm-2 mb-2">
+    <button type="submit" class="btn btn-default" (click)="linkAccount()">Load Steam ID</button>
+  </div>
+  <div class="form-group mx-sm-2 mb-2">
+    <button type="button" class="btn btn-default" (click)="refreshAccount()">Refresh</button>
+  </div>
+</form>

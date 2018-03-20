@@ -1,0 +1,17 @@
+<div class="main-content">
+  <div class="container">
+    <div>
+      <sc-lookup-account></sc-lookup-account>
+      <sc-overview-chart></sc-overview-chart>
+      <sc-perfect-games></sc-perfect-games>
+      <div id="chart" class="half-width"></div>
+      <div id="chart3" class="half-width"></div>
+      <div id="chart4"></div>
+      <div id="chart5" class="half-width"></div>
+      <div id="chart6" class="half-width"></div>
+      <div *ngFor="let game of games">
+        {{game|json}}
+      </div>
+    </div>
+  </div>
+</div>

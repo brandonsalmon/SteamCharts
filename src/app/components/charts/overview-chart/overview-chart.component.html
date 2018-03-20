@@ -1,0 +1,27 @@
+<form class="form-inline" *ngIf="games" [formGroup]="chartOptions">
+  <div class="checkbox">
+    <label>
+      <input type="checkbox" formControlName="showUnplayed" ng-change="recalculateCharts()"> Show Unplayed Games
+    </label>
+  </div>
+  <div class="checkbox">
+    <label>
+      <input type="checkbox" formControlName="showUnachieved" ng-change="recalculateCharts()"> Show Games Without Achievements
+    </label>
+  </div>
+  <div class="checkbox">
+    <label>
+      <input type="checkbox" formControlName="showPerfectOnly" ng-change="recalculateCharts()"> Show Only Perfect Games
+    </label>
+  </div>
+  <div class="form-group pull-right">
+    <label for="sort-select">Sort by</label>
+    <select id="sort-select" class="form-control" ng-model="sort" ng-change="recalculateCharts()" ng-init="sort = 'percent'">
+      <option value="percent">Percent of Achievements Earned</option>
+      <option value="playtime_forever">Time Played</option>
+      <option value="total">Total Number of Achievements</option>
+      <option value="achieved">Number of Achievements Earned</option>
+    </select>
+  </div>
+</form>
+<div id="chart2"></div>

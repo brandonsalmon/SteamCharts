@@ -27,7 +27,7 @@ function gamesRepository() {
 
     self.storeGameDetails = function storeGameDetails(steamId, index, details) {
         if (self.users[steamId] && self.users[steamId].games[index]) {
-            self.users[steamId].games[index].details = details;
+            self.users[steamId].games[index] = details;
         }
     }
 

@@ -1,0 +1,15 @@
+footer {
+    text-align: right;
+    clear: both;
+    font-size: 12px;
+    color: #8F98A0;
+    border: 0;
+    margin: 0;
+    padding: 32px 40px;
+}
+
+footer a {
+    color: #C6D4DF;
+    text-decoration: none;
+    font-family: Arial, Helvetica, Verdana, sans-serif;
+}

@@ -1,0 +1,6 @@
+<div *ngIf="perfectGames.length > 0">
+  <h3>{{perfectGames.length}} Perfect Games</h3>
+  <div class="perfect-game" *ngFor="let game of perfectGames">
+    {{game.gameName}}
+  </div>
+</div>
